@@ -28,9 +28,9 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
   run-tests:
-    name: Run test
-    runs-on: ubuntu_latest
+    name: Run tests
+    runs-on: ubuntu-latest
     steps:
-      -name: Running tests..
-       run: |
-         npm run test
+    - name: Running tests..
+      run: |
+        npm run test
