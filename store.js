@@ -1,8 +1,22 @@
 const storage = require('azure-storage')
 const retryOperations = new storage.ExponentialRetryPolicyFilter();
-
+function LoggingFilter() {
+  this.handle = (requestOptions, next) => {
+    console.log("requestOptions: ")
+    console.log(requestOptions)
+    next(requestOptions, (returnObject, finalCallback, next) => {
+      if(next) {
+      	next(requestOptions, (returnObject, finalCallback, next))
+      } else {
+        finalCallback(returnObject);
+      }
+    })
+  }
+}
+const logging = new LoggingFilter();
 const service = storage.createTableService()
-		.withFilter(retryOperations);
+		.withFilter(retryOperations)
+		.withFilter(logging);
 
 const uuid = require('uuid');
 const table = 'tasks'
