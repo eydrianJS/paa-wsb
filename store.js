@@ -59,8 +59,11 @@ const listTasks = async () => (
         title: entry.title._,
         msg: entry.msg._? entry.msg._: 'Brak',
         timestamp: moment(entry.Timestamp._).format("DD-MM-YYYY HH:mm:ss"),
+        time: entry.Timestamp._,
         status: entry.status._
-      }))) : reject()
+      })).sort(function(x, y){
+        return x.time - y.time;
+      }).reverse()) : reject()
     })
   })
 )
